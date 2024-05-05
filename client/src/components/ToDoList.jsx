@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import ToDoItem from "./ToDoItem";
+import AddToDoItem from "./AddToDoItem";
 
 export default function ToDoList() {
 
     const [todos, setToDos] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+
+    const handleAddTask = (newTask) => {
+        setToDos(previousTodos =>[...previousTodos, newTask])
+    }
 
     useEffect(() => {
         fetch("http://localhost:3030/jsonstore/todos/")
@@ -50,17 +55,12 @@ export default function ToDoList() {
         <section className="todo-list-container">
             <h1>Todo List</h1>
 
-            <div className="add-btn-container">
-                <button className="btn">+ Add new Todo</button>
-            </div>
+            
+
+            <AddToDoItem onAddTask={handleAddTask}/>
 
             <div className="table-wrapper">
 
-                {/* <div className="loading-container">
-                    <div className="loading-spinner">
-                        <span className="loading-spinner-text">Loading</span>
-                    </div>
-                </div> */}
 
                 <table className="table">
                     <thead>
