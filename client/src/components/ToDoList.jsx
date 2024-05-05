@@ -4,6 +4,7 @@ import ToDoItem from "./ToDoItem";
 export default function ToDoList() {
 
     const [todos, setToDos] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         fetch("http://localhost:3030/jsonstore/todos/")
@@ -11,6 +12,7 @@ export default function ToDoList() {
         .then(data => {
             const todos = Object.values(data)
             setToDos(todos)
+            setIsLoading(false)
             console.log(todos)
         })
         .catch(err => console.error(err))
@@ -34,6 +36,14 @@ export default function ToDoList() {
             }
             return todo
         }))
+    }
+
+    if (isLoading){
+        return <div className="loading-container">
+                    <div className="loading-spinner">
+                        <span className="loading-spinner-text">Loading</span>
+                    </div>
+                </div>
     }
 
     return (
